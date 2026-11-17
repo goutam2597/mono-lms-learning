@@ -34,6 +34,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   late final PageController _slides;
   Timer? _autoSlide;
   int _slide = 0;
+  int _slidePage = 60000;
   bool _userDrivingSlides = false;
 
   bool _headerSolid = false;
@@ -50,7 +51,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
       duration: const Duration(milliseconds: 760),
     )..forward();
     _scroll.addListener(_onScroll);
-    _slides = PageController(viewportFraction: 0.92);
+    _slides = PageController(initialPage: _slidePage, viewportFraction: 0.86);
     WidgetsBinding.instance.addPostFrameCallback((_) => _startAutoSlide());
   }
 
@@ -67,17 +68,16 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
 
   void _startAutoSlide() {
     if (_autoSlide != null || !mounted) return;
-    _autoSlide = Timer.periodic(const Duration(seconds: 5), (timer) {
+    _autoSlide = Timer.periodic(const Duration(milliseconds: 4200), (timer) {
       if (!mounted) {
         timer.cancel();
         return;
       }
       if (_reduceMotion || _userDrivingSlides) return;
-      final next = (_slide + 1) % _HomeData.featured.take(3).length;
       if (_slides.hasClients) {
         _slides.animateToPage(
-          next,
-          duration: const Duration(milliseconds: 560),
+          _slidePage + 1,
+          duration: const Duration(milliseconds: 680),
           curve: Curves.easeInOutCubic,
         );
       }
@@ -302,22 +302,28 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             top: 120,
             child: _blob(200, AppColors.sageMoss, 0.09),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 26),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _stage(index: 0, child: _badge()),
-                const SizedBox(height: 14),
-                _stage(index: 1, child: _heroTitle()),
-                const SizedBox(height: 8),
-                _stage(index: 2, child: _heroSubtitle()),
-                const SizedBox(height: 16),
-                _stage(index: 3, child: _searchCard()),
-                const SizedBox(height: 18),
-                _stage(index: 4, child: _courseSlider()),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _stage(index: 0, child: _badge()),
+                    const SizedBox(height: 14),
+                    _stage(index: 1, child: _heroTitle()),
+                    const SizedBox(height: 8),
+                    _stage(index: 2, child: _heroSubtitle()),
+                    const SizedBox(height: 16),
+                    _stage(index: 3, child: _searchCard()),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 26),
+              _stage(index: 4, child: _courseSlider()),
+              const SizedBox(height: 22),
+            ],
           ),
         ],
       ),
@@ -543,10 +549,12 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     if (picked != null) setState(() => _category = picked);
   }
 
-  /// Featured courses as an auto-advancing card slider. Manual swiping pauses
-  /// the loop; reduced-motion users get a static first slide.
+  /// Full-bleed featured course carousel. A large starting page and a
+  /// repeating course list make it loop seamlessly in either direction.
   Widget _courseSlider() {
-    final slides = _HomeData.featured.take(3).toList();
+    final slides = _HomeData.featured;
+    final reduceMotion = _reduceMotion;
+
     return Column(
       children: [
         NotificationListener<ScrollNotification>(
@@ -564,98 +572,185 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             return false;
           },
           child: SizedBox(
-            height: 168,
+            key: const Key('hero-slider-bleed'),
+            height: 206,
             child: PageView.builder(
               key: const Key('hero-slider'),
               controller: _slides,
-              itemCount: slides.length,
-              onPageChanged: (index) => setState(() => _slide = index),
-              itemBuilder: (context, index) => _slideCard(slides[index]),
+              itemCount: reduceMotion ? 1 : null,
+              onPageChanged: (page) {
+                _slidePage = page;
+                final index = page % slides.length;
+                if (_slide != index && mounted) {
+                  setState(() => _slide = index);
+                }
+              },
+              itemBuilder: (context, page) {
+                final course = slides[page % slides.length];
+                return AnimatedBuilder(
+                  animation: _slides,
+                  child: _slideCard(course),
+                  builder: (context, child) {
+                    final currentPage = _slides.hasClients
+                        ? (_slides.page ?? _slidePage.toDouble())
+                        : _slidePage.toDouble();
+                    final distance = (currentPage - page).abs();
+                    final scale = (1 - distance * 0.055).clamp(0.93, 1.0);
+                    return Transform.scale(scale: scale, child: child);
+                  },
+                );
+              },
             ),
           ),
         ),
-        const SizedBox(height: 12),
-        _slideDots(slides.length),
+        const SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            children: [
+              _slideDots(slides.length),
+              const Spacer(),
+              Text(
+                '${_slide + 1} / ${slides.length}',
+                key: const Key('hero-slide-count'),
+                style: const TextStyle(
+                  color: AppColors.sageInk,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  fontFeatures: [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
   Widget _slideCard(CourseModel course) {
     return Semantics(
+      key: Key('hero-slide-card-${course.id}'),
       button: true,
       label: 'Open course: ${course.title}',
       child: GestureDetector(
         onTap: () => _openCourse(course),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 3),
+          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.16),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
+                color: AppColors.sageEvergreen.withValues(alpha: 0.22),
+                blurRadius: 22,
+                offset: const Offset(0, 10),
               ),
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(22),
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Image.asset(course.coverImage, fit: BoxFit.cover),
-                DecoratedBox(
+                Image.asset(
+                  course.coverImage,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => const ColoredBox(
+                    color: AppColors.sageEvergreen,
+                    child: Icon(
+                      Icons.menu_book_rounded,
+                      color: Colors.white70,
+                      size: 42,
+                    ),
+                  ),
+                ),
+                const DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                       colors: [
-                        Colors.black.withValues(alpha: 0.78),
-                        Colors.black.withValues(alpha: 0.06),
-                        Colors.transparent,
+                        Color(0x2633443D),
+                        Color(0x1233443D),
+                        Color(0xD9081510),
                       ],
-                      stops: const [0, 0.55, 1],
+                      stops: [0, 0.34, 1],
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 12,
-                  top: 12,
+                  top: 13,
+                  left: 14,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 9,
-                      vertical: 4,
+                      horizontal: 10,
+                      vertical: 7,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.45),
-                      borderRadius: BorderRadius.circular(999),
+                      color: Colors.white.withValues(alpha: 0.92),
+                      borderRadius: BorderRadius.circular(99),
                     ),
-                    child: Text(
-                      course.category,
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.w600,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.auto_awesome_rounded,
+                          size: 12,
+                          color: AppColors.sageEvergreen,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          course.category,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: AppColors.sageEvergreen,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Positioned(
+                  top: 13,
+                  right: 14,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color(0x5533443D),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Icon(
+                        Icons.play_arrow_rounded,
                         color: Colors.white,
+                        size: 19,
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 14,
-                  right: 14,
-                  bottom: 12,
+                  left: 16,
+                  right: 16,
+                  bottom: 14,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         course.title,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 14.5,
-                          fontWeight: FontWeight.w700,
-                          height: 1.25,
                           color: Colors.white,
+                          fontSize: 16,
+                          height: 1.23,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.28,
+                          shadows: [
+                            Shadow(color: Color(0x66000000), blurRadius: 12),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 7),
@@ -663,39 +758,46 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
                         children: [
                           const Icon(
                             Icons.star_rounded,
-                            size: 13,
-                            color: AppColors.starGold,
+                            color: Color(0xFFFFCA72),
+                            size: 15,
                           ),
                           const SizedBox(width: 3),
-                          Flexible(
+                          Text(
+                            course.rating,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(width: 9),
+                          Expanded(
                             child: Text(
-                              '${course.rating} · ${course.instructor}',
+                              course.instructor,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 11.5,
-                                color: Colors.white.withValues(alpha: 0.85),
+                                color: Colors.white.withValues(alpha: 0.84),
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
+                          Text(
+                            course.price,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: -0.2,
                             ),
-                            decoration: BoxDecoration(
-                              color: AppColors.sageEvergreen,
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Text(
-                              course.price,
-                              style: const TextStyle(
-                                fontSize: 11.5,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.sageHint,
-                              ),
-                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 15,
+                            color: Colors.white.withValues(alpha: 0.82),
                           ),
                         ],
                       ),

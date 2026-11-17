@@ -125,21 +125,41 @@ void main() {
     );
   });
 
-  testWidgets('hero slider pages through the featured courses', (
+  testWidgets('hero carousel spans the viewport and loops through courses', (
     WidgetTester tester,
   ) async {
     await pumpHome(tester);
 
     final slider = find.byKey(const Key('hero-slider'));
-    // Two swipes land on the third slide (the Angular course).
+    expect(tester.getSize(slider).width, 500);
+    expect(tester.getSize(slider).height, 206);
+    expect(find.text('1 / 6'), findsOneWidget);
+
+    // The carousel starts mid-list, so swiping backwards wraps to course six.
+    await tester.fling(slider, const Offset(300, 0), 800);
+    await tester.pump(const Duration(milliseconds: 750));
+    expect(
+      find.descendant(
+        of: slider,
+        matching: find.byKey(const Key('hero-slide-card-business')),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('6 / 6'), findsOneWidget);
+
+    // Continue forwards through the looping carousel to Angular.
     await tester.fling(slider, const Offset(-300, 0), 800);
-    await tester.pump(const Duration(milliseconds: 650));
+    await tester.pump(const Duration(milliseconds: 750));
+    await tester.fling(slider, const Offset(-300, 0), 800);
+    await tester.pump(const Duration(milliseconds: 750));
+    await tester.fling(slider, const Offset(-300, 0), 800);
+    await tester.pump(const Duration(milliseconds: 750));
     await tester.fling(slider, const Offset(-300, 0), 800);
     await tester.pump(const Duration(milliseconds: 650));
     expect(
       find.descendant(
         of: slider,
-        matching: find.text('Build Responsive Websites with Angular'),
+        matching: find.byKey(const Key('hero-slide-card-angular')),
       ),
       findsOneWidget,
     );
