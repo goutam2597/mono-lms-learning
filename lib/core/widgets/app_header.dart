@@ -18,7 +18,7 @@ class AppHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           if (showBack)

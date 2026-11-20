@@ -178,7 +178,7 @@ class OrbitalShowcase extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.hairline),
         boxShadow: [
           BoxShadow(

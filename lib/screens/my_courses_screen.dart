@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/theme/app_theme.dart';
 import '../core/widgets/figma_icon.dart';
+import '../core/widgets/tab_app_bar.dart';
 import 'now_learning_screen.dart';
 
 class MyCoursesScreen extends StatefulWidget {
@@ -29,7 +30,6 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTabs(),
-                    _buildTitle(),
                     _buildCoursesList(),
                   ],
                 ),
@@ -42,32 +42,20 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
   }
 
   Widget _buildHeader() {
-    return Container(
-      height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        children: [
-          const FigmaIcon('back_icon', size: 22),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Text(
-              'My courses',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ),
-          const FigmaIcon('search_nav', size: 22),
-        ],
-      ),
+    return TabAppBar(
+      title: 'My courses',
+      actions: const [
+        Padding(
+          padding: EdgeInsets.all(6),
+          child: FigmaIcon('search_nav', size: 22),
+        ),
+      ],
     );
   }
 
   Widget _buildTabs() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 9, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 9, 12, 0),
       child: Row(
         children: List.generate(_tabs.length, (index) {
           final isSelected = index == _selectedTab;
@@ -75,11 +63,11 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
             onTap: () => setState(() => _selectedTab = index),
             child: Container(
               height: 36,
-              padding: const EdgeInsets.symmetric(horizontal: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               margin: const EdgeInsets.only(right: 9),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.white,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(8),
                 border: isSelected
                     ? null
                     : Border.all(color: AppColors.border),
@@ -99,33 +87,6 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
             ),
           );
         }),
-      ),
-    );
-  }
-
-  Widget _buildTitle() {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(24, 20, 24, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Your next skill starts here.',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 13),
-          Text(
-            'Keep learning, one lesson at a time.',
-            style: TextStyle(
-              fontSize: 13,
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -162,7 +123,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
             : allCourses.where((c) => c.percent == 100).toList();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 27, 24, 40),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 40),
       child: Column(
         children: filteredCourses
             .map((course) => Padding(
@@ -186,7 +147,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
         padding: const EdgeInsets.all(11),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.border),
         ),
         child: Column(
@@ -199,7 +160,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                   width: 102,
                   height: 88,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
                       image: AssetImage(course.image),
                       fit: BoxFit.cover,
@@ -263,7 +224,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: AppColors.benefitBg,
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 FractionallySizedBox(
@@ -272,7 +233,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                     height: 4,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(2),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),

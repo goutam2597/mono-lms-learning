@@ -25,7 +25,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,7 +72,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -108,7 +108,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               color: _selectedFilter == 0
                   ? AppColors.primary
                   : Colors.white,
-              borderRadius: BorderRadius.circular(17),
+              borderRadius: BorderRadius.circular(8),
               border: _selectedFilter == 0
                   ? null
                   : Border.all(color: AppColors.border),
@@ -137,7 +137,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               color: _selectedFilter == 1
                   ? AppColors.primary
                   : Colors.white,
-              borderRadius: BorderRadius.circular(17),
+              borderRadius: BorderRadius.circular(8),
               border: _selectedFilter == 1
                   ? null
                   : Border.all(color: AppColors.border),
@@ -166,7 +166,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
@@ -188,7 +188,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                 height: 24,
                 decoration: BoxDecoration(
                   color: const Color(0xFFE4F5EC),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Center(
                   child: Text(
@@ -308,7 +308,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
@@ -373,7 +373,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.benefitBg,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../core/theme/app_theme.dart';
-import '../../core/widgets/figma_icon.dart';
-import 'verify_email_screen.dart';
+import '../main_shell.dart';
+import 'auth_components.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -11,396 +12,163 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
-  final _nameController = TextEditingController(text: 'Ronald Richard');
-  final _emailController =
-      TextEditingController(text: 'studentdemo@example.com');
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _termsAgreed = true;
+  final _confirmController = TextEditingController();
+
+  bool _termsAgreed = false;
   bool _obscurePassword = true;
+  bool _obscureConfirm = true;
+  bool _submitting = false;
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmController.dispose();
     super.dispose();
   }
 
-  void _createAccount() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => VerifyEmailScreen(email: _emailController.text),
-      ),
-    );
+  /// UI-kit demo handoff: both sign-up methods go straight to the app shell.
+  /// Replace with the auth repository call once real auth is wired up.
+  void _submit() {
+    FocusScope.of(context).unfocus();
+    setState(() => _submitting = true);
+
+    Future<void>.delayed(const Duration(milliseconds: 700)).then((_) {
+      if (!mounted) return;
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const MainShell()),
+        (route) => false,
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        bottom: false,
+    return AuthShell(
+      title: 'Create your\naccount.',
+      subtitle: 'New skills. New possibilities — in a few minutes.',
+      footer: AuthFooterLink(
+        question: 'Already have an account?',
+        action: 'Log in',
+        onTap: () => Navigator.maybePop(context),
+      ),
+      child: AutofillGroup(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildBrandHeader(),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFAFAFC),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28),
-                    topRight: Radius.circular(28),
+            AuthField(
+              label: 'Full name',
+              hint: 'Your full name',
+              controller: _nameController,
+              keyboardType: TextInputType.name,
+              textCapitalization: TextCapitalization.words,
+              autofillHints: const [AutofillHints.name],
+            ),
+            const SizedBox(height: 15),
+            AuthField(
+              label: 'Email address',
+              hint: 'you@example.com',
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              autofillHints: const [AutofillHints.newUsername],
+            ),
+            const SizedBox(height: 15),
+            AuthField(
+              label: 'Password',
+              hint: 'Create a strong password',
+              controller: _passwordController,
+              obscureText: _obscurePassword,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.newPassword],
+              trailing: AuthEyeToggle(
+                obscured: _obscurePassword,
+                onTap: () =>
+                    setState(() => _obscurePassword = !_obscurePassword),
+              ),
+            ),
+            const SizedBox(height: 15),
+            AuthField(
+              label: 'Confirm password',
+              hint: 'Re-enter your password',
+              controller: _confirmController,
+              obscureText: _obscureConfirm,
+              textInputAction: TextInputAction.done,
+              autofillHints: const [AutofillHints.newPassword],
+              onSubmitted: (_) => _submit(),
+              trailing: AuthEyeToggle(
+                obscured: _obscureConfirm,
+                onTap: () =>
+                    setState(() => _obscureConfirm = !_obscureConfirm),
+              ),
+            ),
+            const SizedBox(height: 18),
+            GestureDetector(
+              onTap: () => setState(() => _termsAgreed = !_termsAgreed),
+              behavior: HitTestBehavior.opaque,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1),
+                    child: AuthCheckbox(
+                      value: _termsAgreed,
+                      onTap: () => setState(() => _termsAgreed = !_termsAgreed),
+                    ),
                   ),
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 28),
-                      const Text(
-                        'Full name',
+                  const SizedBox(width: 11),
+                  const Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        text: 'I agree to the ',
                         style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
+                          fontSize: 12.5,
+                          height: 1.5,
+                          color: AuthColors.inkSoft,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildTextField(
-                        controller: _nameController,
-                        hintText: 'Enter your full name',
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Email address',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildTextField(
-                        controller: _emailController,
-                        hintText: 'Enter your email',
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Password',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildPasswordField(),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Use at least 8 characters, including a number.',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () =>
-                            setState(() => _termsAgreed = !_termsAgreed),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 18,
-                              height: 18,
-                              margin: const EdgeInsets.only(top: 2),
-                              decoration: BoxDecoration(
-                                color: _termsAgreed
-                                    ? AppColors.primary
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(4),
-                                border: _termsAgreed
-                                    ? null
-                                    : Border.all(
-                                        color: const Color(0xFFB8AFC7)),
-                              ),
-                              child: _termsAgreed
-                                  ? const Center(
-                                      child: Text(
-                                        '✓',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            const SizedBox(width: 12),
-                            const Expanded(
-                              child: Text(
-                                'I agree to the Terms of Service and\nPrivacy Policy.',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal,
-                                  color: AppColors.textSecondary,
-                                  height: 1.4,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 26),
-                      GestureDetector(
-                        onTap: _createAccount,
-                        child: Container(
-                          height: 48,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Create account',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Row(
-                        children: const [
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.border,
-                              height: 1,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 14),
-                            child: Text(
-                              'or',
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.border,
-                              height: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 22),
-                      GestureDetector(
-                        onTap: _createAccount,
-                        child: Container(
-                          height: 48,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: const Color(0xFFDED9E8),
-                              width: 1,
-                            ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Continue with Google',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      const Center(
-                        child: Text(
-                          'Already have an account?',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Center(
-                        child: GestureDetector(
-                          onTap: () => Navigator.maybePop(context),
-                          child: const Text(
-                            'Log in →',
+                        children: [
+                          TextSpan(
+                            text: 'Terms of Service',
                             style: TextStyle(
-                              fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: AppColors.primary,
                             ),
                           ),
-                        ),
+                          TextSpan(text: ' and '),
+                          TextSpan(
+                            text: 'Privacy Policy',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          TextSpan(text: '.'),
+                        ],
                       ),
-                      const SizedBox(height: 36),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
+            ),
+            const SizedBox(height: 22),
+            AuthPrimaryButton(
+              label: 'Create account',
+              loading: _submitting,
+              onPressed: _submitting ? null : _submit,
+            ),
+            const SizedBox(height: 18),
+            const AuthDivider(label: 'or sign up with'),
+            const SizedBox(height: 18),
+            AuthGoogleButton(
+              label: 'Continue with Google',
+              onPressed: _submitting ? () {} : _submit,
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildBrandHeader() {
-    return Container(
-      height: 190,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -30,
-            top: -60,
-            child: Container(
-              width: 176,
-              height: 176,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: -50,
-            top: -90,
-            child: Container(
-              width: 244,
-              height: 244,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              Image.asset(
-                'assets/images/logo_white.png',
-                height: 28,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'Start something great.',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'New skills. New possibilities. All yours.',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.sageHint,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String hintText,
-  }) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(11),
-        border: Border.all(color: const Color(0xFFDED9E8), width: 1),
-      ),
-      alignment: Alignment.centerLeft,
-      child: TextField(
-        controller: controller,
-        style: const TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.normal,
-          color: AppColors.textPrimary,
-        ),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          isDense: true,
-          hintText: hintText,
-          hintStyle: const TextStyle(color: Color(0xFF8C8795)),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPasswordField() {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(11),
-        border: Border.all(color: const Color(0xFFDED9E8), width: 1),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _passwordController,
-              obscureText: _obscurePassword,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.normal,
-                color: AppColors.textPrimary,
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                hintText: 'Create a strong password',
-                hintStyle: TextStyle(color: Color(0xFF8C8795)),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () => setState(() => _obscurePassword = !_obscurePassword),
-            child: const FigmaIcon('eye_icon', size: 20),
-          ),
-        ],
       ),
     );
   }

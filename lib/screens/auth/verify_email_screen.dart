@@ -67,7 +67,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -124,7 +124,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                             height: 58,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(11),
+                              borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: isFocused
                                     ? AppColors.primary
@@ -204,10 +204,10 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       Container(
                         width: double.infinity,
                         height: 58,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
                           color: AppColors.benefitBg,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Center(
                           child: Text(
@@ -237,7 +237,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     return Container(
       height: 190,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Stack(
         children: [
           Positioned(

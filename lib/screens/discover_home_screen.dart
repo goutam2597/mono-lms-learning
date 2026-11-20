@@ -29,7 +29,6 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     with SingleTickerProviderStateMixin {
   final ScrollController _scroll = ScrollController();
   final TextEditingController _query = TextEditingController();
-  final TextEditingController _email = TextEditingController();
   late final AnimationController _intro;
   late final PageController _slides;
   Timer? _autoSlide;
@@ -59,7 +58,6 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   void dispose() {
     _scroll.dispose();
     _query.dispose();
-    _email.dispose();
     _intro.dispose();
     _autoSlide?.cancel();
     _slides.dispose();
@@ -115,10 +113,6 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     MaterialPageRoute(builder: (_) => const CreateAccountScreen()),
   );
 
-  void _toast(String message) =>
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
-
   // ------------------------------------------------------------------ shell
 
   @override
@@ -149,7 +143,6 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
                     _becomeInstructor(),
                     _testimonials(),
                     _faq(),
-                    _footer(),
                   ],
                 ),
               ),
@@ -165,7 +158,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOut,
       height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: _headerSolid ? Colors.white : AppColors.heroTop,
         border: Border(
@@ -306,7 +299,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -352,7 +345,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       decoration: BoxDecoration(
         color: AppColors.sageEvergreen,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
             color: AppColors.sageEvergreen.withValues(alpha: 0.22),
@@ -406,7 +399,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   Widget _searchCard() => Container(
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: AppColors.hairline),
       boxShadow: [
         BoxShadow(
@@ -454,7 +447,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
               height: 40,
               decoration: BoxDecoration(
                 color: AppColors.sageEvergreen,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(
                 Icons.arrow_forward_rounded,
@@ -479,7 +472,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
         decoration: BoxDecoration(
           color: AppColors.sageHint.withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -509,7 +502,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
       context: context,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
       ),
       builder: (sheetContext) => SafeArea(
         child: ListView(
@@ -517,7 +510,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           padding: const EdgeInsets.symmetric(vertical: 10),
           children: [
             const Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 6),
+              padding: EdgeInsets.fromLTRB(12, 10, 12, 6),
               child: Text(
                 'Browse by category',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
@@ -531,7 +524,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
                   height: 30,
                   decoration: BoxDecoration(
                     color: c.color.tint(0.12),
-                    borderRadius: BorderRadius.circular(9),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(c.icon, size: 16, color: c.color.deep),
                 ),
@@ -605,7 +598,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         ),
         const SizedBox(height: 15),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: [
               _slideDots(slides.length),
@@ -637,7 +630,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
                 color: AppColors.sageEvergreen.withValues(alpha: 0.22),
@@ -647,7 +640,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(8),
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -687,7 +680,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
                     ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.92),
-                      borderRadius: BorderRadius.circular(99),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -825,7 +818,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           height: 7,
           decoration: BoxDecoration(
             color: i == _slide ? AppColors.sageEvergreen : AppColors.sageMint,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: BorderRadius.circular(8),
           ),
         ),
     ],
@@ -835,7 +828,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
 
   Widget _statsRibbon() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
       child: Column(
         children: [
           _statRow(_HomeData.stats.take(2).toList()),
@@ -859,7 +852,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: AppColors.hairline),
       boxShadow: [
         BoxShadow(
@@ -876,7 +869,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           height: 44,
           decoration: BoxDecoration(
             color: stat.color.tint(0.12),
-            borderRadius: BorderRadius.circular(11),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(stat.icon, size: 22, color: stat.ink),
         ),
@@ -926,7 +919,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   Widget _masterSkills() {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(20, 22, 20, 30),
+      padding: const EdgeInsets.fromLTRB(12, 22, 12, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -969,7 +962,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
               width: 84,
               height: 84,
               decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(22)),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
                 gradient: LinearGradient(
                   colors: [AppColors.accentPurple, AppColors.accentCyan],
                 ),
@@ -1037,7 +1030,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         height: 44,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: const Color(0xFFEDEDED)),
           boxShadow: [
             BoxShadow(
@@ -1074,7 +1067,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SectionHeader(
               title: AppStrings.categoriesHeading,
               onViewAll: _openExplore,
@@ -1086,7 +1079,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             key: const Key('category-rail'),
             height: 164,
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
               itemCount: _HomeData.categories.length,
               separatorBuilder: (_, _) => const SizedBox(width: 12),
@@ -1128,7 +1121,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SectionHeader(
               title: AppStrings.featuredHeading,
               onViewAll: _openExplore,
@@ -1140,7 +1133,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             height: 38,
             child: ListView.separated(
               key: const Key('featured-tabs-row'),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
               itemCount: _HomeData.filterTags.length,
               separatorBuilder: (_, __) => const SizedBox(width: 8),
@@ -1152,12 +1145,12 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 180),
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                       color: selected
                           ? AppColors.sageHint.withValues(alpha: 0.55)
                           : Colors.transparent,
-                      borderRadius: BorderRadius.circular(7),
+                      borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: selected
                             ? AppColors.sageEvergreen
@@ -1186,7 +1179,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             height: 378,
             child: ListView.separated(
               key: const Key('featured-rail'),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
               itemCount: courses.length,
               separatorBuilder: (_, _) => const SizedBox(width: 14),
@@ -1201,7 +1194,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           ),
           const SizedBox(height: 22),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: _primaryButton(
               label: AppStrings.viewAll,
               onTap: _openExplore,
@@ -1224,7 +1217,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: white ? Colors.white : (color ?? AppColors.sageEvergreen),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.12),
@@ -1267,12 +1260,12 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
 
   Widget _transformBanner() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+      padding: const EdgeInsets.fromLTRB(12, 30, 12, 30),
       child: Container(
         padding: const EdgeInsets.all(22),
         decoration: BoxDecoration(
           color: AppColors.bannerDark,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               color: AppColors.bannerDark.withValues(alpha: 0.28),
@@ -1335,7 +1328,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   Widget _goals() {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 30),
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1409,7 +1402,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: SectionHeader(
               title: AppStrings.accelerateHeading,
               subtitle: AppStrings.accelerateSubtitle,
@@ -1420,7 +1413,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           for (var i = 0; i < _HomeData.showcases.length; i++) ...[
             if (i > 0) const SizedBox(height: 14),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: _showcaseCard(_HomeData.showcases[i]),
             ),
           ],
@@ -1433,7 +1426,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     padding: const EdgeInsets.all(18),
     decoration: BoxDecoration(
       color: Colors.white.withValues(alpha: 0.045),
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
     ),
     child: Column(
@@ -1444,7 +1437,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           height: 44,
           decoration: BoxDecoration(
             color: s.color.tint(0.16),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(s.icon, size: 22, color: s.color),
         ),
@@ -1499,7 +1492,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   Widget _trending() {
     return Container(
       color: AppColors.background,
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+      padding: const EdgeInsets.fromLTRB(12, 30, 12, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1526,7 +1519,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.hairline),
           boxShadow: [
             BoxShadow(
@@ -1540,7 +1533,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 c.coverImage,
                 width: 104,
@@ -1643,7 +1636,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SectionHeader(
               title: AppStrings.instructorsHeading,
               onViewAll: _openExplore,
@@ -1655,7 +1648,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             height: 186,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               children: [
                 for (final t in _HomeData.teachers)
                   Padding(
@@ -1685,7 +1678,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             height: 124,
             decoration: BoxDecoration(
               color: t.tint,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
               child: PersonAvatar(name: t.name, size: 62, imageUrl: t.avatar),
@@ -1721,7 +1714,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     width: 168,
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       gradient: const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -1801,11 +1794,11 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
 
   Widget _becomeInstructor() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 30),
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 30),
       child: Container(
         padding: const EdgeInsets.all(22),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(8),
           gradient: const LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -1861,7 +1854,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   Widget _testimonials() {
     return Container(
       color: AppColors.navy,
-      padding: const EdgeInsets.fromLTRB(20, 32, 20, 32),
+      padding: const EdgeInsets.fromLTRB(12, 32, 12, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1875,7 +1868,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.35),
@@ -1975,7 +1968,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
   Widget _faq() {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+      padding: const EdgeInsets.fromLTRB(12, 30, 12, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1999,7 +1992,7 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: open ? AppColors.sageMint : AppColors.hairline,
           ),
@@ -2052,123 +2045,6 @@ class _DiscoverHomeScreenState extends State<DiscoverHomeScreen>
     );
   }
 
-  // ------------------------------------------------------------------ footer
-
-  Widget _footer() {
-    return Container(
-      color: AppColors.footerBackground,
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 34),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Image.asset(
-            'assets/images/logo_white.png',
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 12),
-          const Text(
-            AppStrings.footerTagline,
-            style: TextStyle(fontSize: 12.5, color: AppColors.sageHint),
-          ),
-          const SizedBox(height: 22),
-          Row(
-            children: [
-              for (final link in const [
-                'Explore courses',
-                'About us',
-                'Help center',
-              ])
-                Expanded(
-                  child: GestureDetector(
-                    onTap: _openExplore,
-                    child: Text(
-                      link,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            AppStrings.footerNewsletter,
-            style: TextStyle(fontSize: 12, color: AppColors.sageHint),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 6),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _email,
-                    keyboardType: TextInputType.emailAddress,
-                    onSubmitted: (_) => _toast(AppStrings.notWired),
-                    style: const TextStyle(fontSize: 13),
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      hintText: AppStrings.footerEmail,
-                      hintStyle: TextStyle(
-                        fontSize: 12.5,
-                        color: Color(0xFF8A8A8A),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _toast(AppStrings.notWired),
-                  child: Container(
-                    height: 38,
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: AppColors.sageEvergreen,
-                      borderRadius: BorderRadius.circular(9),
-                    ),
-                    child: const Row(
-                      children: [
-                        Text(
-                          'Join',
-                          style: TextStyle(
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          size: 14,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            AppStrings.footerCopyright,
-            style: TextStyle(fontSize: 10.5, color: AppColors.sageMint),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 /// A thin dashed circle, used as the web's dotted ornament.

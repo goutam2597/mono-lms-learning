@@ -26,7 +26,7 @@ class AccountVerifiedScreen extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -69,7 +69,7 @@ class AccountVerifiedScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: AppColors.benefitBg,
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,7 +150,7 @@ class AccountVerifiedScreen extends StatelessWidget {
     return Container(
       height: 190,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Stack(
         children: [
           Positioned(

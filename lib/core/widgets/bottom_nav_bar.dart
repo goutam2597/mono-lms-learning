@@ -64,7 +64,7 @@ class BottomNavBar extends StatelessWidget {
             height: 30,
             decoration: BoxDecoration(
               color: isSelected ? AppColors.selectedTab : null,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
               child: FigmaIcon(

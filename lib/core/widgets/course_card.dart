@@ -48,10 +48,10 @@ class _WebCourseCardState extends State<WebCourseCard> {
         curve: Curves.easeOut,
         child: Material(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(8),
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(8),
               border: Border.all(color: const Color(0xFFF1F1F1)),
               boxShadow: [
                 BoxShadow(
@@ -68,7 +68,7 @@ class _WebCourseCardState extends State<WebCourseCard> {
               children: [
                 _cover(c),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -106,7 +106,7 @@ class _WebCourseCardState extends State<WebCourseCard> {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
           child: AspectRatio(
             aspectRatio: 16 / 10,
             child: Image.asset(
@@ -166,7 +166,7 @@ class _WebCourseCardState extends State<WebCourseCard> {
             padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
             decoration: BoxDecoration(
               color: AppColors.categoryGreen,
-              borderRadius: BorderRadius.circular(999),
+              borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.14),
@@ -254,7 +254,7 @@ class _WebCourseCardState extends State<WebCourseCard> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             color: AppColors.ratingBg,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -386,7 +386,7 @@ class _EnrollPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(8),
         gradient: const LinearGradient(
           colors: [AppColors.enrollFrom, AppColors.enrollTo],
         ),

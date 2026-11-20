@@ -49,12 +49,12 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
         color: Colors.white,
         border: Border(top: BorderSide(color: AppColors.border, width: 1)),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 13, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 13, 12, 0),
       child: Container(
         height: 48,
         decoration: BoxDecoration(
           color: AppColors.primary,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
           child: Text(
@@ -73,7 +73,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
   Widget _buildHeader() {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           const FigmaIcon('back_icon', size: 22),
@@ -114,7 +114,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
           child: Container(
             height: 55,
             color: const Color(0xFF171027).withValues(alpha: 0.86),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               children: [
                 const FigmaIcon('pause_icon', size: 22),
@@ -149,7 +149,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
 
   Widget _buildLessonInfo() {
     return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -186,7 +186,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
   Widget _buildTabs() {
     final tabs = ['Lessons', 'Resources', 'Notes'];
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 32, 12, 0),
       child: Column(
         children: [
           Row(
@@ -235,7 +235,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
                           color: _activeTabIndex == index
                               ? AppColors.primary
                               : Colors.transparent,
-                          borderRadius: BorderRadius.circular(2),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     ),
@@ -272,7 +272,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 18, 24, 20),
+      padding: const EdgeInsets.fromLTRB(12, 18, 12, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -333,7 +333,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: isPlaying ? AppColors.benefitBg : null,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -342,7 +342,7 @@ class _NowLearningScreenState extends State<NowLearningScreen> {
             height: 24,
             decoration: BoxDecoration(
               color: stateBg,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Center(child: stateChild),
           ),

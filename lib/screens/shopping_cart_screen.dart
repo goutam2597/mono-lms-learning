@@ -25,7 +25,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -102,7 +102,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -138,7 +138,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
@@ -147,7 +147,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(9),
+                borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
                   image,
                   width: 95,
@@ -225,10 +225,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     return Container(
       width: double.infinity,
       height: 89,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       decoration: BoxDecoration(
         color: const Color(0xFFEFF8F2),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Stack(
         children: [
@@ -280,7 +280,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
@@ -369,7 +369,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         top: false,
         child: Container(
           height: 66,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: [
               Column(
@@ -410,7 +410,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   height: 48,
                   decoration: BoxDecoration(
                     color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
                     child: Text(

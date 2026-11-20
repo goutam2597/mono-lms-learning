@@ -25,7 +25,7 @@ class _CheckoutBillingScreenState extends State<CheckoutBillingScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -131,7 +131,7 @@ class _CheckoutBillingScreenState extends State<CheckoutBillingScreen> {
                                 color: _saveDetails
                                     ? AppColors.primary
                                     : Colors.white,
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: BorderRadius.circular(8),
                                 border: _saveDetails
                                     ? null
                                     : Border.all(
@@ -187,7 +187,7 @@ class _CheckoutBillingScreenState extends State<CheckoutBillingScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -289,7 +289,7 @@ class _CheckoutBillingScreenState extends State<CheckoutBillingScreen> {
         top: false,
         child: Container(
           height: 66,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: () {
@@ -305,7 +305,7 @@ class _CheckoutBillingScreenState extends State<CheckoutBillingScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
                 child: Text(
@@ -347,11 +347,11 @@ class _BillingField extends StatelessWidget {
         const SizedBox(height: 7),
         Container(
           height: 48,
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(color: const Color(0xFFDED9E8), width: 1),
           ),
           child: Text(

@@ -44,7 +44,7 @@ class _WebCategoryCardState extends State<WebCategoryCard> {
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.12),
@@ -54,7 +54,7 @@ class _WebCategoryCardState extends State<WebCategoryCard> {
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(8),
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -94,7 +94,7 @@ class _WebCategoryCardState extends State<WebCategoryCard> {
                             height: 34,
                             decoration: BoxDecoration(
                               color: Colors.white.withValues(alpha: 0.94),
-                              borderRadius: BorderRadius.circular(11),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
                               widget.icon,
@@ -109,7 +109,7 @@ class _WebCategoryCardState extends State<WebCategoryCard> {
                             ),
                             decoration: BoxDecoration(
                               color: Colors.white.withValues(alpha: 0.94),
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
                               '${widget.courseCount} ${widget.courseCount == 1 ? 'course' : 'courses'}',

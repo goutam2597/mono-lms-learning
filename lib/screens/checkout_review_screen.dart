@@ -25,7 +25,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -80,7 +80,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
                                 color: _termsAgreed
                                     ? AppColors.primary
                                     : Colors.white,
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: BorderRadius.circular(8),
                                 border: _termsAgreed
                                     ? null
                                     : Border.all(
@@ -138,7 +138,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -239,7 +239,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
       padding: const EdgeInsets.all(11),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Row(
@@ -293,7 +293,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.benefitBg,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,7 +349,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.benefitBg,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -404,7 +404,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
@@ -490,7 +490,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
           top: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 13, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 13, 12, 0),
       child: Column(
         children: [
           GestureDetector(
@@ -507,7 +507,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
                 child: Text(
@@ -527,7 +527,7 @@ class _CheckoutReviewScreenState extends State<CheckoutReviewScreen> {
             height: 5,
             decoration: BoxDecoration(
               color: AppColors.textPrimary,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ],

@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -117,7 +117,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -201,10 +201,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           height: height ?? 48,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(color: const Color(0xFFDED9E8), width: 1),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           alignment: maxLines == 1 ? Alignment.centerLeft : Alignment.topLeft,
           child: TextField(
             controller: controller,
@@ -233,7 +233,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.benefitBg,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,7 +271,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           top: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 13, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 13, 12, 0),
       child: Column(
         children: [
           GestureDetector(
@@ -286,7 +286,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
                 child: Text(
@@ -306,7 +306,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             height: 5,
             decoration: BoxDecoration(
               color: AppColors.textPrimary,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ],

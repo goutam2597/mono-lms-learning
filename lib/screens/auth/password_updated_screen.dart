@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../core/theme/app_theme.dart';
-import '../../core/widgets/figma_icon.dart';
+import 'auth_components.dart';
 import 'login_screen.dart';
 
 class PasswordUpdatedScreen extends StatelessWidget {
@@ -8,206 +9,105 @@ class PasswordUpdatedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            _buildBrandHeader(context),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFAFAFC),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28),
-                    topRight: Radius.circular(28),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 48),
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFE4F5EC),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Center(
-                          child: FigmaIcon('success_check', size: 40),
-                        ),
-                      ),
-                      const SizedBox(height: 28),
-                      const Text(
-                        'Password updated.',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        'Your new password is ready to use.\nLog in to pick up where you left off.',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.textSecondary,
-                          height: 1.4,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 36),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: AppColors.benefitBg,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Text(
-                              'A little peace of mind.',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primary,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Keep your password private and use a unique password for every account.',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
-                                height: 1.4,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 36),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const LoginScreen(),
-                            ),
-                            (route) => false,
-                          );
-                        },
-                        child: Container(
-                          height: 48,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Back to login →',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      const Text(
-                        'Ready for your next chapter?',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+    return AuthShell(
+      title: 'You’re back\nin control.',
+      subtitle: 'A fresh password. The same possibilities.',
+      onBack: () => Navigator.maybePop(context),
+      useAppBar: true,
+      footer: const Text(
+        'Ready for your next chapter?',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 12,
+          color: AuthColors.inkSoft,
         ),
       ),
-    );
-  }
-
-  Widget _buildBrandHeader(BuildContext context) {
-    return Container(
-      height: 190,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Positioned(
-            right: -30,
-            top: -60,
+          const SizedBox(height: 18),
+          Center(
             child: Container(
-              width: 176,
-              height: 176,
-              decoration: BoxDecoration(
+              width: 84,
+              height: 84,
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  width: 1,
-                ),
+                color: Color(0xFFE4F5EC),
               ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            top: 20,
-            child: GestureDetector(
-              onTap: () => Navigator.maybePop(context),
               child: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
-                color: Colors.white,
+                Icons.check_rounded,
+                size: 40,
+                color: Color(0xFF137547),
               ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              Image.asset(
-                'assets/images/logo_white.png',
-                height: 28,
-                fit: BoxFit.contain,
+          const SizedBox(height: 22),
+          const Center(
+            child: Text(
+              'Password updated.',
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.w700,
+                color: AuthColors.ink,
               ),
-              const SizedBox(height: 32),
-              const Text(
-                'You’re back in control.',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Center(
+            child: Text(
+              'Your new password is ready to use.\nLog in to pick up where you left off.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.5,
+                color: AuthColors.inkSoft,
+              ),
+            ),
+          ),
+          const SizedBox(height: 28),
+          AuthPrimaryButton(
+            label: 'Back to login',
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+                (route) => false,
+              );
+            },
+          ),
+          const SizedBox(height: 26),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 16,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.benefitBg,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: const [
+                Text(
+                  'A little peace of mind.',
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.sageInk,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'A fresh password. The same possibilities.',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.sageHint,
+                SizedBox(height: 6),
+                Text(
+                  'Keep your password private and use a unique password for every account.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.5,
+                    color: AppColors.sageMoss,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

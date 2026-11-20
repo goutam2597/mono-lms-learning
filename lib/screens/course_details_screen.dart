@@ -64,7 +64,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -107,14 +107,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildPreviewOrCover(BuildContext context) {
     if (course.hasVideoPreview) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
         height: 194,
         width: double.infinity,
         child: Stack(
           alignment: Alignment.center,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 course.coverImage,
                 width: double.infinity,
@@ -123,7 +123,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
               ),
             ),
             ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
               child: Container(
                 color: const Color(0xFF191919).withValues(alpha: 0.10),
               ),
@@ -172,9 +172,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     return Container(
       width: double.infinity,
       height: 195,
-      margin: const EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         image: DecorationImage(
           image: AssetImage(course.coverImage),
           fit: BoxFit.cover,
@@ -186,13 +186,13 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildCategoryTag() {
     if (course.categoryIsPurple) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Container(
           height: 28,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             color: AppColors.benefitBg,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -212,13 +212,13 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
         height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.border, width: 1),
         ),
         child: Row(
@@ -240,7 +240,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   Widget _buildTitle() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Text(
         course.title,
         style: const TextStyle(
@@ -255,7 +255,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   Widget _buildRating() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Text(
         '★ ${course.rating}   ${course.ratingSubtitle}',
         style: TextStyle(
@@ -272,7 +272,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildInstructor() {
     if (course.instructorAvatar != null) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           children: [
             ClipOval(
@@ -312,7 +312,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -341,14 +341,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildFeaturesOrMetadata() {
     if (course.featuresTitle != null) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Container(
           width: double.infinity,
           height: 68,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: BoxDecoration(
             color: AppColors.benefitBg,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,12 +378,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
         height: 50,
         decoration: BoxDecoration(
           color: AppColors.benefitBg,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           children: [
@@ -434,7 +434,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildCenteredTabs() {
     final tabs = ['Overview', 'Curriculum', 'Reviews'];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         children: [
           Row(
@@ -482,7 +482,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                           color: _activeTabIndex == index
                               ? AppColors.primary
                               : Colors.transparent,
-                          borderRadius: BorderRadius.circular(2),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     ),
@@ -499,7 +499,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget _buildTabContent() {
     if (_activeTabIndex == 0) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -564,7 +564,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppColors.border, width: 1),
                 ),
                 child: Column(
@@ -597,7 +597,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       );
     } else if (_activeTabIndex == 1) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -623,7 +623,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -662,7 +662,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         top: false,
         child: Container(
           height: 66,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: [
               Column(
@@ -713,7 +713,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   height: 48,
                   decoration: BoxDecoration(
                     color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
                     child: Text(

@@ -19,7 +19,7 @@ class OrderConfirmedScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -108,7 +108,7 @@ class OrderConfirmedScreen extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -139,7 +139,7 @@ class OrderConfirmedScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
@@ -204,7 +204,7 @@ class OrderConfirmedScreen extends StatelessWidget {
         padding: const EdgeInsets.all(11),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.border, width: 1),
         ),
         child: Row(
@@ -262,7 +262,7 @@ class OrderConfirmedScreen extends StatelessWidget {
           top: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 13, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 13, 12, 0),
       child: Column(
         children: [
           GestureDetector(
@@ -278,7 +278,7 @@ class OrderConfirmedScreen extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
                 child: Text(
@@ -298,7 +298,7 @@ class OrderConfirmedScreen extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: AppColors.textPrimary,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ],

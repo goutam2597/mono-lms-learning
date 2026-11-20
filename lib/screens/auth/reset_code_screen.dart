@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../core/theme/app_theme.dart';
-import '../../core/widgets/figma_icon.dart';
+import 'auth_components.dart';
 import 'new_password_screen.dart';
 
 class ResetCodeScreen extends StatefulWidget {
@@ -16,14 +17,8 @@ class ResetCodeScreen extends StatefulWidget {
 }
 
 class _ResetCodeScreenState extends State<ResetCodeScreen> {
-  final List<TextEditingController> _digitControllers = [
-    TextEditingController(text: '8'),
-    TextEditingController(text: '4'),
-    TextEditingController(text: '2'),
-    TextEditingController(text: '1'),
-    TextEditingController(text: '9'),
-    TextEditingController(text: '5'),
-  ];
+  final List<TextEditingController> _digitControllers =
+      List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   int _focusedIndex = 0;
 
@@ -39,6 +34,15 @@ class _ResetCodeScreenState extends State<ResetCodeScreen> {
   }
 
   void _verifyCode() {
+    final code =
+        _digitControllers.map((c) => c.text).join();
+    if (code.length < 6) {
+      // Demo handoff; replace with repository verification.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter the 6-digit code')),
+      );
+      return;
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -49,252 +53,119 @@ class _ResetCodeScreenState extends State<ResetCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            _buildBrandHeader(),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFAFAFC),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28),
-                    topRight: Radius.circular(28),
-                  ),
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 32),
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: AppColors.benefitBg,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: const Center(
-                          child: FigmaIcon('mail_badge_icon', size: 36),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Enter the 6-digit code sent to',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        widget.email,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () => Navigator.maybePop(context),
-                        child: const Text(
-                          'Change email address',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 28),
-                      // 6 digit code inputs
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(6, (index) {
-                          final isFocused = _focusedIndex == index;
-                          return Container(
-                            width: 48,
-                            height: 58,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(11),
-                              border: Border.all(
-                                color: isFocused
-                                    ? AppColors.primary
-                                    : const Color(0xFFDED9E8),
-                                width: isFocused ? 1.5 : 1.0,
-                              ),
-                            ),
-                            alignment: Alignment.center,
-                            child: TextField(
-                              controller: _digitControllers[index],
-                              focusNode: _focusNodes[index],
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              maxLength: 1,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primary,
-                              ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                counterText: '',
-                                isDense: true,
-                              ),
-                              onTap: () =>
-                                  setState(() => _focusedIndex = index),
-                              onChanged: (val) {
-                                if (val.isNotEmpty && index < 5) {
-                                  _focusNodes[index + 1].requestFocus();
-                                  setState(() => _focusedIndex = index + 1);
-                                }
-                              },
-                            ),
-                          );
-                        }),
-                      ),
-                      const SizedBox(height: 32),
-                      GestureDetector(
-                        onTap: _verifyCode,
-                        child: Container(
-                          height: 48,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Verify reset code',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      const Text(
-                        'Didn’t receive a code?',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Resend code in 00:30',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Container(
-                        width: double.infinity,
-                        height: 58,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: AppColors.benefitBg,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Check your spam folder, too.\nYour code is valid for 10 minutes.',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: AppColors.textSecondary,
-                              height: 1.4,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 36),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBrandHeader() {
-    return Container(
-      height: 190,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Stack(
+    return AuthShell(
+      title: 'Enter your\nreset code.',
+      subtitle: 'We sent a 6-digit code to ${widget.email}.',
+      onBack: () => Navigator.maybePop(context),
+      useAppBar: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Positioned(
-            right: -30,
-            top: -60,
-            child: Container(
-              width: 176,
-              height: 176,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  width: 1,
+          GestureDetector(
+            onTap: () => Navigator.maybePop(context),
+            behavior: HitTestBehavior.opaque,
+            child: const Row(
+              children: [
+                Text(
+                  'Wrong email?',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: AuthColors.inkSoft,
+                  ),
                 ),
-              ),
+                SizedBox(width: 6),
+                Text(
+                  'Change it',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
             ),
           ),
-          Positioned(
-            right: 0,
-            top: 20,
-            child: GestureDetector(
-              onTap: () => Navigator.maybePop(context),
-              child: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
-                color: Colors.white,
-              ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(6, (index) {
+              final isFocused = _focusedIndex == index;
+              return Container(
+                width: 48,
+                height: 56,
+                decoration: BoxDecoration(
+                  color: AuthColors.fieldFill,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isFocused
+                        ? AppColors.primary
+                        : AuthColors.fieldBorder,
+                    width: isFocused ? 1.6 : 1,
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: TextField(
+                  controller: _digitControllers[index],
+                  focusNode: _focusNodes[index],
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  maxLength: 1,
+                  style: const TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.w700,
+                    color: AuthColors.ink,
+                  ),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    counterText: '',
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  onTap: () => setState(() => _focusedIndex = index),
+                  onChanged: (val) {
+                    if (val.isNotEmpty && index < 5) {
+                      _focusNodes[index + 1].requestFocus();
+                      setState(() => _focusedIndex = index + 1);
+                    }
+                  },
+                ),
+              );
+            }),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Your code is valid for 10 minutes. Check your spam folder, too.',
+            style: TextStyle(
+              fontSize: 11.5,
+              color: AuthColors.inkFaint,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              Image.asset(
-                'assets/images/logo_white.png',
-                height: 28,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'Enter your reset code.',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          const SizedBox(height: 22),
+          AuthPrimaryButton(
+            label: 'Verify reset code',
+            onPressed: _verifyCode,
+          ),
+          const SizedBox(height: 18),
+          Center(
+            child: Text.rich(
+              TextSpan(
+                text: 'Didn’t receive a code? ',
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AuthColors.inkSoft,
                 ),
+                children: [
+                  TextSpan(
+                    text: 'Resend in 00:30',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary.withValues(alpha: 0.55),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
-              const Text(
-                'Keeping your learning journey secure.',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.sageHint,
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

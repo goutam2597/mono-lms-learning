@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_theme.dart';
-import '../../core/widgets/figma_icon.dart';
+
+import 'auth_components.dart';
 import 'password_updated_screen.dart';
 
 class NewPasswordScreen extends StatefulWidget {
@@ -11,12 +11,13 @@ class NewPasswordScreen extends StatefulWidget {
 }
 
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
-  final _newPasswordController =
-      TextEditingController(text: '••••••••••••');
-  final _confirmPasswordController =
-      TextEditingController(text: '••••••••••••');
+  final _newPasswordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _obscureNew = true;
   bool _obscureConfirm = true;
+
+  String? _newError;
+  String? _confirmError;
 
   @override
   void dispose() {
@@ -25,7 +26,36 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     super.dispose();
   }
 
+  bool get _hasMinLength => _newPasswordController.text.length >= 8;
+  bool get _hasNumber => RegExp(r'[0-9]').hasMatch(_newPasswordController.text);
+
+  /// 0 = empty, 1 = weak, 2 = fair, 3 = strong.
+  int get _strength {
+    if (_newPasswordController.text.isEmpty) return 0;
+    final score = [
+      _hasMinLength,
+      _hasNumber,
+      RegExp(r'[A-Z]|[^A-Za-z0-9]').hasMatch(_newPasswordController.text),
+    ].where((met) => met).length;
+    return score.clamp(1, 3);
+  }
+
   void _resetPassword() {
+    setState(() {
+      _newError = !_hasMinLength
+          ? 'Use at least 8 characters'
+          : !_hasNumber
+              ? 'Include at least one number'
+              : null;
+      _confirmError = _confirmPasswordController.text.isEmpty
+          ? 'Confirm your password'
+          : _confirmPasswordController.text != _newPasswordController.text
+              ? 'Passwords do not match'
+              : null;
+    });
+    if (_newError != null || _confirmError != null) return;
+
+    FocusScope.of(context).unfocus();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -36,295 +66,119 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        bottom: false,
+    return AuthShell(
+      title: 'Set a new\npassword.',
+      subtitle: 'Make it different from the one you used before.',
+      onBack: () => Navigator.maybePop(context),
+      useAppBar: true,
+      child: AutofillGroup(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildBrandHeader(),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFAFAFC),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28),
-                    topRight: Radius.circular(28),
-                  ),
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 28),
-                      Center(
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: AppColors.benefitBg,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: const Center(
-                            child: FigmaIcon('lock_badge_icon', size: 36),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      const Center(
-                        child: Text(
-                          'Your new password should be different\nfrom the one you used before.',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.textSecondary,
-                            height: 1.4,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const SizedBox(height: 28),
-                      const Text(
-                        'New password',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildPasswordField(
-                        controller: _newPasswordController,
-                        obscure: _obscureNew,
-                        onToggle: () =>
-                            setState(() => _obscureNew = !_obscureNew),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Confirm new password',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildPasswordField(
-                        controller: _confirmPasswordController,
-                        obscure: _obscureConfirm,
-                        onToggle: () => setState(
-                            () => _obscureConfirm = !_obscureConfirm),
-                      ),
-                      const SizedBox(height: 18),
-                      // 4 Password strength segments
-                      Row(
-                        children: List.generate(4, (index) {
-                          return Expanded(
-                            child: Container(
-                              height: 4,
-                              margin: EdgeInsets.only(
-                                right: index < 3 ? 10 : 0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF168252),
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Strong password',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF168252),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      Row(
-                        children: const [
-                          FigmaIcon('check_icon', size: 14),
-                          SizedBox(width: 8),
-                          Text(
-                            'At least 8 characters',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: const [
-                          FigmaIcon('check_icon', size: 14),
-                          SizedBox(width: 8),
-                          Text(
-                            'Includes a number',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-                      GestureDetector(
-                        onTap: _resetPassword,
-                        child: Container(
-                          height: 48,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Reset password',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 36),
-                    ],
-                  ),
-                ),
+            AuthField(
+              label: 'New password',
+              hint: 'Create a strong password',
+              controller: _newPasswordController,
+              obscureText: _obscureNew,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.newPassword],
+              errorText: _newError,
+              onChanged: (_) => setState(() {
+                _newError = null;
+                if (_confirmError != null) _confirmError = null;
+              }),
+              trailing: AuthEyeToggle(
+                obscured: _obscureNew,
+                onTap: () => setState(() => _obscureNew = !_obscureNew),
               ),
+            ),
+            const SizedBox(height: 10),
+            AuthStrengthMeter(
+              strength: _strength,
+              emptyLabel: 'Password strength',
+            ),
+            const SizedBox(height: 8),
+            _RequirementRow(
+              met: _hasMinLength,
+              label: 'At least 8 characters',
+            ),
+            const SizedBox(height: 6),
+            _RequirementRow(
+              met: _hasNumber,
+              label: 'Includes a number',
+            ),
+            const SizedBox(height: 15),
+            AuthField(
+              label: 'Confirm new password',
+              hint: 'Re-enter your password',
+              controller: _confirmPasswordController,
+              obscureText: _obscureConfirm,
+              textInputAction: TextInputAction.done,
+              autofillHints: const [AutofillHints.newPassword],
+              errorText: _confirmError,
+              onSubmitted: (_) => _resetPassword(),
+              onChanged: (_) {
+                if (_confirmError != null) setState(() => _confirmError = null);
+              },
+              trailing: AuthEyeToggle(
+                obscured: _obscureConfirm,
+                onTap: () =>
+                    setState(() => _obscureConfirm = !_obscureConfirm),
+              ),
+            ),
+            const SizedBox(height: 22),
+            AuthPrimaryButton(
+              label: 'Reset password',
+              onPressed: _resetPassword,
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildBrandHeader() {
-    return Container(
-      height: 190,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -30,
-            top: -60,
-            child: Container(
-              width: 176,
-              height: 176,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: -50,
-            top: -90,
-            child: Container(
-              width: 244,
-              height: 244,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            top: 20,
-            child: GestureDetector(
-              onTap: () => Navigator.maybePop(context),
-              child: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              Image.asset(
-                'assets/images/logo_white.png',
-                height: 28,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                'Make a fresh start.',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Choose a strong password for your account.',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.sageHint,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+class _RequirementRow extends StatelessWidget {
+  final bool met;
+  final String label;
 
-  Widget _buildPasswordField({
-    required TextEditingController controller,
-    required bool obscure,
-    required VoidCallback onToggle,
-  }) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(11),
-        border: Border.all(color: const Color(0xFFDED9E8), width: 1),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              obscureText: obscure,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.normal,
-                color: AppColors.textPrimary,
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-              ),
+  const _RequirementRow({required this.met, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: met ? const Color(0xFF137547) : Colors.transparent,
+            border: met
+                ? null
+                : Border.all(color: const Color(0xFFC4CFC3), width: 1.2),
+          ),
+          child: AnimatedOpacity(
+            opacity: met ? 1 : 0,
+            duration: const Duration(milliseconds: 140),
+            child: const Icon(
+              Icons.check_rounded,
+              size: 10,
+              color: Colors.white,
             ),
           ),
-          GestureDetector(
-            onTap: onToggle,
-            child: const FigmaIcon('eye_icon', size: 20),
+        ),
+        const SizedBox(width: 9),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 11.5,
+            fontWeight: met ? FontWeight.w600 : FontWeight.w400,
+            color: met ? const Color(0xFF137547) : AuthColors.inkFaint,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

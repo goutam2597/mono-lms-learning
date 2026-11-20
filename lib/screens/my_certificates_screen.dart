@@ -18,7 +18,7 @@ class MyCertificatesScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -100,7 +100,7 @@ class MyCertificatesScreen extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -131,16 +131,16 @@ class MyCertificatesScreen extends StatelessWidget {
       padding: const EdgeInsets.all(11),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.benefitBg,
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.sageMint, width: 1),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -210,7 +210,7 @@ class MyCertificatesScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: AppColors.primary,
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
           child: Text(
@@ -238,7 +238,7 @@ class MyCertificatesScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.sageMint, width: 1),
         ),
         child: const Center(

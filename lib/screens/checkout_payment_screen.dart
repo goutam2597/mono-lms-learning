@@ -26,7 +26,7 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -86,7 +86,7 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
                                   color: _saveCard
                                       ? AppColors.primary
                                       : Colors.white,
-                                  borderRadius: BorderRadius.circular(4),
+                                  borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
                                     color: const Color(0xFFB8AFC7),
                                   ),
@@ -144,7 +144,7 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           GestureDetector(
@@ -238,10 +238,10 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
     return Container(
       width: double.infinity,
       height: 73,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         color: AppColors.benefitBg,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -289,10 +289,10 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
       onTap: () => setState(() => _selectedMethod = 0),
       child: Container(
         height: 65,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? AppColors.primary : AppColors.border,
             width: isSelected ? 1.5 : 1.0,
@@ -359,10 +359,10 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
       onTap: () => setState(() => _selectedMethod = 1),
       child: Container(
         height: 62,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? AppColors.primary : AppColors.border,
             width: isSelected ? 1.5 : 1.0,
@@ -432,7 +432,7 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
           top: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 13, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 13, 12, 0),
       child: Column(
         children: [
           GestureDetector(
@@ -449,7 +449,7 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
                 child: Text(
@@ -469,7 +469,7 @@ class _CheckoutPaymentScreenState extends State<CheckoutPaymentScreen> {
             height: 5,
             decoration: BoxDecoration(
               color: AppColors.textPrimary,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ],
@@ -500,11 +500,11 @@ class _PaymentField extends StatelessWidget {
         const SizedBox(height: 7),
         Container(
           height: 48,
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(color: const Color(0xFFDED9E8), width: 1),
           ),
           child: Text(
